@@ -4,10 +4,10 @@ const int BAUD_RATE = 115200;
 const int READ_DELAY = 15; 
 
 // --- 🛠️ TUNING PARAMETERS ---
-// 1. SMOOTHING_FACTOR (0.05 se 0.2): Kam number = zyada smooth par halka sa lag.
+// 1. SMOOTHING_FACTOR (0.05 se 0.2)
 const float SMOOTHING_FACTOR = 0.12; 
 
-// 2. DEADBAND (15 se 30): Jitna bada number, stationary arm utni hi stable rahegi.
+// 2. DEADBAND (15 se 30): 
 const int DEADBAND = 22;           
 // ----------------------------
 
@@ -19,7 +19,7 @@ void setup() {
   
   for(int i=0; i<5; i++) {
     pinMode(POT_PINS[i], INPUT);
-    // Initial reading taaki start hoty hi arm jump na maare
+
     int init_raw = analogRead(POT_PINS[i]);
     smooth_vals[i] = init_raw;
     last_sent[i] = init_raw;
@@ -28,8 +28,6 @@ void setup() {
   Serial.println("ESP32 Spike-Proof Node Ready");
 }
 
-// Function: 3 samples lekar beech wala (Median) pick karta hai.
-// Isse achanak aane wala 'High' ya 'Low' spike 100% block ho jata hai.
 int getMedianSample(int pin) {
   int samples[3];
   samples[0] = analogRead(pin);
