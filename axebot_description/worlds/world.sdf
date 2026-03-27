@@ -1,0 +1,468 @@
+<sdf version='1.9'>
+  <world name='empty'>
+    <physics name='1ms' type='ignored'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <plugin name='gz::sim::systems::Physics' filename='ignition-gazebo-physics-system'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='ignition-gazebo-user-commands-system'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='ignition-gazebo-scene-broadcaster-system'/>
+    <plugin name='gz::sim::systems::Contact' filename='ignition-gazebo-contact-system'/>
+    <plugin name='gz::sim::systems::Sensors' filename='ignition-gazebo-sensors-system'>
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <gui fullscreen='false'>
+      <plugin name='3D View' filename='GzScene3D'>
+        <ignition-gui>
+          <title>3D View</title>
+          <property type='bool' key='showTitleBar'>false</property>
+        </ignition-gui>
+        <engine>ogre2</engine>
+        <scene>scene</scene>
+        <ambient_light>0.4 0.4 0.4</ambient_light>
+        <background_color>0.8 0.8 0.8</background_color>
+        <camera_pose>-6 0 6 0 0.5 0</camera_pose>
+      </plugin>
+      <plugin name='Visualize Lidar' filename='VisualizeLidar'>
+        <ignition-gui>
+          <title>Visualize Lidar</title>
+        </ignition-gui>
+        <topic>scan</topic>
+      </plugin>
+      <plugin name='World control' filename='WorldControl'>
+        <ignition-gui>
+          <title>World control</title>
+          <property type='bool' key='showTitleBar'>false</property>
+          <property type='bool' key='resizable'>false</property>
+          <property type='double' key='height'>72</property>
+          <property type='double' key='width'>121</property>
+          <property type='double' key='z'>1</property>
+          <property type='string' key='state'>floating</property>
+          <anchors target='3D View'>
+            <line own='left' target='left'/>
+            <line own='bottom' target='bottom'/>
+          </anchors>
+        </ignition-gui>
+        <play_pause>true</play_pause>
+        <step>true</step>
+      </plugin>
+      <plugin name='Transform control' filename='TransformControl'>
+        <ignition-gui>
+          <title>Transform control</title>
+        </ignition-gui>
+      </plugin>
+      <plugin name='Entity tree' filename='EntityTree'>
+        <ignition-gui>
+          <title>Entity tree</title>
+        </ignition-gui>
+      </plugin>
+      <plugin name='Component inspector' filename='ComponentInspector'>
+        <ignition-gui>
+          <title>Component inspector</title>
+        </ignition-gui>
+      </plugin>
+      <!-- ADDED FOR ARROW KEY TELEOP -->
+      <plugin filename="KeyPublisher" name="Key Publisher"/>
+      <plugin filename="Teleop" name="Teleop">
+        <ignition-gui>
+          <property type="string" key="state">floating</property>
+        </ignition-gui>
+        <topic>/cmd_vel</topic>
+      </plugin>
+    </gui>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Kitchen Dining'>
+      <static>true</static>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/kitchen and dining/3/files/meshes/kitchen_dining.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.925059 -1.69391 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='CoffeeTable'>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/coffeetable/2/files/meshes/CoffeeTable.obj</uri>
+              <scale>0.00817 0.00817 0.00817</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/coffeetable/2/files/meshes/CoffeeTable.obj</uri>
+              <scale>0.00817 0.00817 0.00817</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.01226 4.86766 -0.000121 0 -0 0</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='green_stamp'>
+      <pose>-1.825 3.87 0.81 0 0 1.57 </pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+      <link name='link'>
+        <inertial>
+          <mass>0.02</mass>
+          <inertia>
+            <ixx>0.00003</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00003</iyy>
+            <iyz>0</iyz>
+            <izz>0.00001</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='base_collision'>
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>0.05</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0</restitution_coefficient>
+            </bounce>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='base_visual'>
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>0.05</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.1 0.7 0.2 1</ambient>
+            <diffuse>0.1 0.7 0.2 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+        </visual>
+        <collision name='handle_left_collision'>
+          <pose>-0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name='handle_left_visual'>
+          <pose>-0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.1 0.7 0.2 1</ambient>
+            <diffuse>0.1 0.7 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name='handle_right_collision'>
+          <pose>0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name='handle_right_visual'>
+          <pose>0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.1 0.7 0.2 1</ambient>
+            <diffuse>0.1 0.7 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name='handle_top_collision'>
+          <pose>0 0 0.105 0 1.5708 0</pose>
+          <geometry>
+             <cylinder>
+              <radius>0.006</radius>
+              <length>0.106</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name='handle_top_visual'>
+          <pose>0 0 0.105 0 1.5708 0</pose>
+          <geometry>
+             <cylinder>
+              <radius>0.006</radius>
+              <length>0.106</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.1 0.7 0.2 1</ambient>
+            <diffuse>0.1 0.7 0.2 1</diffuse>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+    </model>
+    <model name='red_stamp'>
+      <pose>-1.625 3.89 0.77 0 0 1.57</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+      <link name='link'>
+        <inertial>
+          <mass>0.02</mass>
+          <inertia>
+            <ixx>0.00003</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00003</iyy>
+            <iyz>0</iyz>
+            <izz>0.00001</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='base_collision'>
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>0.05</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0</restitution_coefficient>
+            </bounce>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='base_visual'>
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>0.05</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.8 0.1 0.1 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+        </visual>
+        <collision name='handle_left_collision'>
+          <pose>-0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name='handle_left_visual'>
+          <pose>-0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.8 0.1 0.1 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+        <collision name='handle_right_collision'>
+          <pose>0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name='handle_right_visual'>
+          <pose>0.05 0 0.065 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.006</radius>
+              <length>0.08</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.8 0.1 0.1 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+        <collision name='handle_top_collision'>
+          <pose>0 0 0.105 0 1.5708 0</pose>
+          <geometry>
+             <cylinder>
+              <radius>0.006</radius>
+              <length>0.106</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name='handle_top_visual'>
+          <pose>0 0 0.105 0 1.5708 0</pose>
+          <geometry>
+             <cylinder>
+              <radius>0.006</radius>
+              <length>0.106</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.8 0.1 0.1 1</ambient>
+            <diffuse>0.9 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+    </model>
+    <include>
+      <uri>file:///home/workpc/.ignition/fuel/fuel.gazebosim.org/openrobotics/models/rectable/2</uri>
+      <name>RecTable</name>
+      <pose>-1.52761 3.41878 0 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/workpc/.ignition/fuel/fuel.gazebosim.org/openrobotics/models/rectable/2</uri>
+      <name>RecTable2</name>
+      <pose>-4.125 -2.89 -0.08 0 0 1.5708</pose>
+    </include>
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 -0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.1 -0.9</direction>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.01</linear>
+        <constant>0.90000000000000002</constant>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+  </world>
+</sdf>

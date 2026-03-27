@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- 2D LiDAR sensor with mount --> 
+  <!-- 2D LiDAR sensor with mount --> 
+  <xacro:macro name="lidar_sensor" params="parent *origin">
+
+    <!-- LiDAR mount link -->
+    <link name="lidar_mount_link">
+      <!-- Plate -->
+      <visual>
+        <origin xyz="0 0 0.065" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.08 0.08 0.01"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <!-- Leg 1 -->
+      <visual>
+        <origin xyz="0.03 0.03 0.03" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.01" length="0.06"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <!-- Leg 2 -->
+      <visual>
+        <origin xyz="0.03 -0.03 0.03" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.01" length="0.06"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <!-- Leg 3 -->
+      <visual>
+        <origin xyz="-0.03 0.03 0.03" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.01" length="0.06"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <!-- Leg 4 -->  
+      <visual>
+        <origin xyz="-0.03 -0.03 0.03" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.01" length="0.06"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0.035" rpy="0 0 0"/>
+        <geometry>
+           <box size="0.08 0.08 0.07"/> 
+        </geometry>
+      </collision>
+
+      <inertial>
+        <mass value="0.2"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                 iyy="0.001" iyz="0.0"
+                 izz="0.001"/>
+      </inertial>
+    </link>
+
+    <joint name="lidar_mount_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="lidar_mount_link"/>
+    </joint>
+
+    <!-- Joint connecting LiDAR mount to LiDAR body -->
+    <joint name="lidar_to_mount_joint" type="fixed">
+      <origin xyz="0 0 0.07" rpy="1.57 0 3.14"/>
+      <parent link="lidar_mount_link"/>
+      <child link="lidar_link"/>
+    </joint>
+
+    <!-- LiDAR body -->
+    <link name="lidar_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find axebot_description)/meshes/lidar/ydlidar_driver.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find axebot_description)/meshes/lidar/ydlidar_x2_assy_part_1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+       <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find axebot_description)/meshes/lidar/ydlidar_x2_assy_part_2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+       <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find axebot_description)/meshes/lidar/ydlidar_x2_assy_part_3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+       <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find axebot_description)/meshes/lidar/ydlidar_x2_assy_part_4.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+       <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find axebot_description)/meshes/lidar/ydlidar_x2_assy_part_5.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.03" length="0.04"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.15"/>
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001"/>
+      </inertial>
+    </link>
+
+    <joint name="laser_joint" type="fixed">
+      <origin xyz="0 0.03 0" rpy="-1.57 0 3.14"/>
+      <parent link="lidar_link"/>
+      <child link="laser_frame"/>                     
+    </joint>
+
+     <link name="laser_frame">
+       <inertial>
+         <mass value="0.01"/>
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+       </inertial>
+     </link>
+
+  <gazebo reference="laser_frame">
+    <sensor name="laser" type="gpu_lidar">
+       <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <lidar>
+                <scan>
+                    <horizontal>
+                        <samples>360</samples>
+                        <min_angle>-3.14</min_angle>
+                        <max_angle>3.14</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.3</min>
+                    <max>12</max>
+                </range>
+            </lidar>
+            <topic>scan</topic>
+            <gz_frame_id>laser_frame</gz_frame_id>
+        </sensor>
+    </gazebo>
+
+</xacro:macro>
+
+  <!-- IMU Sensor -->
+  <xacro:macro name="imu_sensor" params="parent *origin">
+    <link name="imu_link">
+      <visual>
+        <geometry>
+          <box size="0.02 0.02 0.01"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.02 0.02 0.01"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.01"/>
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      </inertial>
+    </link>
+
+    <joint name="imu_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="imu_link"/>
+    </joint>
+
+    <gazebo reference="imu_link">
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>true</visualize>
+        <topic>imu</topic>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+</robot>
+

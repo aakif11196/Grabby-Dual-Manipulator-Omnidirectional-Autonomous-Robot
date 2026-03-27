@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="vx300s_ros2_control" params="robot_name">
+    <ros2_control name="GazeboSystem" type="system">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+
+      <joint name="${robot_name}_waist">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint>
+
+      <joint name="${robot_name}_shoulder">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint>
+
+      <joint name="${robot_name}_elbow">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint>
+
+      <joint name="${robot_name}_forearm_roll">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint>
+
+      <joint name="${robot_name}_wrist_angle">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint>
+
+      <!--joint name="${robot_name}_wrist_rotate">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint-->
+
+      <joint name="${robot_name}_left_finger">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint>
+      
+      <joint name="${robot_name}_right_finger">
+        <param name="mimic">${robot_name}_left_finger</param>
+        <param name="multiplier">-1</param>
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+      </joint>
+
+    </ros2_control>
+  </xacro:macro>
+
+</robot>

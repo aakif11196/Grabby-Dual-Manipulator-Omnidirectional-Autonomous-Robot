@@ -1,0 +1,166 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="axebot">
+    <!-- Ignition Gazebo uses SDF-style materials (not Gazebo Classic names like 'Gazebo/Black') -->
+    <gazebo reference="chassis_link">
+        <visual>
+            <material>
+                <ambient>0 0 0 1</ambient>
+                <diffuse>0 0 0 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="wheel1_link">
+        <visual>
+            <material>
+                <ambient>0.2 0.2 0.2 1</ambient>
+                <diffuse>0.2 0.2 0.2 1</diffuse>
+            </material>
+        </visual>
+        <!-- <fdir1>0 1 0"</fdir1> -->
+        <!-- <mu1>1.7</mu1> -->
+        <!-- <mu2>0.2</mu2> -->
+    </gazebo>
+
+    <gazebo reference="wheel2_link">
+        <visual>
+            <material>
+                <ambient>0.2 0.2 0.2 1</ambient>
+                <diffuse>0.2 0.2 0.2 1</diffuse>
+            </material>
+        </visual>
+        <!-- <fdir1>0 1 0"</fdir1> -->
+        <!-- <mu1>1.7</mu1> -->
+        <!-- <mu2>0.2</mu2> -->
+    </gazebo>
+
+    <gazebo reference="wheel3_link">
+        <visual>
+            <material>
+                <ambient>0.2 0.2 0.2 1</ambient>
+                <diffuse>0.2 0.2 0.2 1</diffuse>
+            </material>
+        </visual>
+        <!-- <fdir1>0 1 0"</fdir1> -->
+        <!-- <mu1>1.7</mu1> -->
+        <!-- <mu2>0.2</mu2> -->
+    </gazebo>
+
+    <!-- Motor shaft materials -->
+    <gazebo reference="motor1_shaft_link">
+        <visual>
+            <material>
+                <ambient>1 0 0 1</ambient>
+                <diffuse>1 0 0 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="motor2_shaft_link">
+        <visual>
+            <material>
+                <ambient>1 0 0 1</ambient>
+                <diffuse>1 0 0 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="motor3_shaft_link">
+        <visual>
+            <material>
+                <ambient>1 0 0 1</ambient>
+                <diffuse>1 0 0 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <!-- Depth camera materials -->
+    <gazebo reference="left_camera_link">
+        <visual>
+            <material>
+                <ambient>0 0 0 1</ambient>
+                <diffuse>0 0 0 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="right_camera_link">
+        <visual>
+            <material>
+                <ambient>0 0 0 1</ambient>
+                <diffuse>0 0 0 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <!-- IMU material -->
+    <gazebo reference="imu_link">
+        <visual>
+            <material>
+                <ambient>0 0 0 1</ambient>
+                <diffuse>0 0 0 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <!-- LiDAR materials -->
+    <gazebo reference="lidar_mount_link">
+        <visual>
+            <material>
+                <ambient>1 1 1 1</ambient>
+                <diffuse>1 1 1 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="lidar_link">
+        <visual>
+            <material>
+                <ambient>0 0 1 1</ambient>
+                <diffuse>0 0 1 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <!-- Linear actuator materials -->
+    <gazebo reference="left_actuator_base_link">
+        <visual>
+            <material>
+                <ambient>0.2 0.2 0.2 1</ambient>
+                <diffuse>0.2 0.2 0.2 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="left_actuator_platform_link">
+        <visual>
+            <material>
+                <ambient>0.75 0.75 0.75 1</ambient>
+                <diffuse>0.75 0.75 0.75 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="right_actuator_base_link">
+        <visual>
+            <material>
+                <ambient>0.2 0.2 0.2 1</ambient>
+                <diffuse>0.2 0.2 0.2 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo reference="right_actuator_platform_link">
+        <visual>
+            <material>
+                <ambient>0.75 0.75 0.75 1</ambient>
+                <diffuse>0.75 0.75 0.75 1</diffuse>
+            </material>
+        </visual>
+    </gazebo>
+
+    <gazebo>
+        <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+            <parameters>$(find axebot_control)/config/ros2_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+</robot>

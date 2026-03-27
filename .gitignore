@@ -1,0 +1,48 @@
+# ---------------------------------------------------
+# AxeBot ROS 2 Workspace .gitignore
+# ---------------------------------------------------
+
+# ROS 2 Build, Install, and Log Directories
+build/
+install/
+log/
+*/build/
+*/install/
+*/log/
+
+# Python Cache and Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+venv/
+.venv/
+env/
+
+# C/C++ Build Artifacts (Just in case they leak out of /build)
+*.o
+*.so
+*.a
+*.out
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# IDEs and Text Editors
+.vscode/
+.idea/
+*.swp
+*~
+*.bak
+*.tmp
+
+# OS Specific (Mac/Windows garbage files)
+.DS_Store
+Thumbs.db
+
+# Gazebo / RViz Auto-generated
+*.rviz.bak

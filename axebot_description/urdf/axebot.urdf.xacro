@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="axebot">
+    <xacro:arg name="only_one_wheel" default="false"/>
+
+    <!-- Constants for wheel mechanical parameters -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="chassis_mass" value="9.0"/>
+    <xacro:property name="chassis_height" value="0.08"/>
+    <xacro:property name="robot_height" value="0.053"/>
+    <xacro:property name="wheel_mass" value="0.4" />
+    <xacro:property name="wheel_radius" value="0.0508" />
+    <xacro:property name="motor_shaft_radius" value="0.010" />
+    <xacro:property name="shaft_mass" value="0.02" />
+
+    <!-- The sum of the chassis radius, half the wheel thickness, and the 
+    motor shaft length must be equal to the robot radius L = 0.1 m used in the
+    kinematic model -->
+    <xacro:property name="chassis_radius" value="0.28"/>
+    <xacro:property name="wheel_thickness" value="0.01905" />
+    <xacro:property name="motor_shaft_length" value="0.008475"/>
+
+    <!-- Include base components -->
+    <xacro:include filename="$(find axebot_description)/urdf/wheel.urdf.xacro"/>
+    <xacro:include filename="$(find axebot_description)/urdf/materials.urdf.xacro"/>
+    <xacro:include filename="$(find axebot_description)/urdf/gazebo.urdf.xacro"/>
+    <xacro:include filename="$(find axebot_description)/urdf/ros2_control.urdf.xacro"/>
+    
+    <!-- Include new components -->
+    <xacro:include filename="$(find axebot_description)/urdf/vx300s_left.urdf.xacro"/>
+    <xacro:include filename="$(find axebot_description)/urdf/vx300s_right.urdf.xacro"/>
+    <xacro:include filename="$(find axebot_description)/urdf/sensors.urdf.xacro"/>
+
+    
+    <link name="base_link"></link>
+
+    <joint name="base_link_joint" type="fixed">
+        <origin xyz="0 0 ${robot_height}" rpy="0 0 0" />
+        <parent link="base_link"/>
+        <child link="chassis_link" />
+    </joint>
+
+    <link name="chassis_link">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${chassis_radius}" length="${chassis_height}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${chassis_radius}" length="${chassis_height}"/>
+            </geometry>
+            <material name="black"/>
+        </collision>
+
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="1.634"/>
+            <inertia ixx="0.00316977667"
+                        ixy="0.0"
+                        ixz="0.0"
+                        iyy="0.00316977667"
+                        iyz="0.0"
+                        izz="0.005903752"/>
+        </inertial>
+    </link>
+
+    <!-- Wheels -->
+    <xacro:if value="$(arg only_one_wheel)">
+        <xacro:wheel parent="chassis_link" suffix="1" theta="0"/>
+    </xacro:if>
+    <xacro:unless value="$(arg only_one_wheel)">
+        <xacro:wheel parent="chassis_link" suffix="1" theta="${PI}"/>
+        <xacro:wheel parent="chassis_link" suffix="2" theta="-${PI/3}"/>
+        <xacro:wheel parent="chassis_link" suffix="3" theta="${PI/3}"/>
+    </xacro:unless>
+
+
+
+    <!-- LiDAR sensor on top of chassis -->
+    <xacro:lidar_sensor parent="chassis_link">
+        <origin xyz="0 0 -0.04" rpy="0 0 0"/>
+    </xacro:lidar_sensor>
+
+    <!-- IMU Sensor -->
+    <xacro:imu_sensor parent="chassis_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:imu_sensor>
+
+    <!-- Include Linear Actuator Macro -->
+    <xacro:include filename="$(find axebot_description)/urdf/linear_actuator.urdf.xacro"/>
+
+    <!-- Left Linear Actuator -->
+    <xacro:linear_actuator prefix="left" parent="chassis_link">
+        <origin xyz="0 0.15 0.02" rpy="0 0 0"/>
+    </xacro:linear_actuator>
+
+    <!-- Right Linear Actuator -->
+    <xacro:linear_actuator prefix="right" parent="chassis_link">
+        <origin xyz="0 -0.15 0.02" rpy="0 0 0"/>
+    </xacro:linear_actuator>
+
+    <!-- Left manipulator attached to actuator -->
+    <xacro:vx300s_left parent="left_actuator_platform_link">
+        <origin xyz="0 0 0" rpy="0 0 ${PI/4}"/>
+    </xacro:vx300s_left>
+
+
+
+    <!-- Right manipulator attached to actuator -->
+    <xacro:vx300s_right parent="right_actuator_platform_link">
+        <origin xyz="0 0 0" rpy="0 0 ${-PI/4}"/>
+    </xacro:vx300s_right>
+
+
+
+</robot>
+

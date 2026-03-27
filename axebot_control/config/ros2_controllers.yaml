@@ -1,0 +1,129 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    use_sim_time: true
+
+    # Controller type definitions (must be under ros__parameters)
+    omnidirectional_controller:
+      type: omnidirectional_controllers/OmnidirectionalController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    vx300s_left_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    vx300s_left_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    vx300s_right_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    vx300s_right_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    left_actuator_controller:
+      type: forward_command_controller/ForwardCommandController
+
+    right_actuator_controller:
+      type: forward_command_controller/ForwardCommandController
+
+omnidirectional_controller:
+  ros__parameters:
+    wheel_names: 
+      - wheel1_joint
+      - wheel2_joint
+      - wheel3_joint
+
+    robot_radius: 0.28
+    wheel_radius: 0.0508
+    gamma: 30.0 # angle between body fixed y axis and the normal of wheel3
+
+    publish_rate: 50.0
+    odom_frame_id: odom
+    base_frame_id: base_link
+    pose_covariance_diagonal : [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
+    odom_numeric_integration_method: runge_kutta2
+
+    open_loop: false
+    enable_odom_tf: true
+
+    cmd_vel_timeout: 0.5
+    use_stamped_vel: false
+
+vx300s_left_arm_controller:
+  ros__parameters:
+    joints:
+      - vx300s_left_waist
+      - vx300s_left_shoulder
+      - vx300s_left_elbow
+      - vx300s_left_forearm_roll
+      - vx300s_left_wrist_angle
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    gains:
+      vx300s_left_waist: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_left_shoulder: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_left_elbow: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_left_forearm_roll: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_left_wrist_angle: {p: 100.0, i: 0.01, d: 10.0}
+
+vx300s_left_gripper_controller:
+  ros__parameters:
+    joints:
+      - vx300s_left_left_finger
+      - vx300s_left_right_finger
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+vx300s_right_arm_controller:
+  ros__parameters:
+    joints:
+      - vx300s_right_waist
+      - vx300s_right_shoulder
+      - vx300s_right_elbow
+      - vx300s_right_forearm_roll
+      - vx300s_right_wrist_angle
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    gains:
+      vx300s_right_waist: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_right_shoulder: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_right_elbow: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_right_forearm_roll: {p: 100.0, i: 0.01, d: 10.0}
+      vx300s_right_wrist_angle: {p: 100.0, i: 0.01, d: 10.0}
+
+vx300s_right_gripper_controller:
+  ros__parameters:
+    joints:
+      - vx300s_right_left_finger
+      - vx300s_right_right_finger
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+left_actuator_controller:
+  ros__parameters:
+    joints:
+      - left_actuator_joint
+    interface_name: position
+
+right_actuator_controller:
+  ros__parameters:
+    joints:
+      - right_actuator_joint
+    interface_name: position

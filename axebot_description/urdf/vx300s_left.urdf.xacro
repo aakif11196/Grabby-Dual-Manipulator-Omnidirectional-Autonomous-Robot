@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find axebot_description)/urdf/vx300s_macro.urdf.xacro"/>
+  
+  <xacro:macro name="vx300s_left" params="parent *origin">
+    <xacro:vx300s robot_name="vx300s_left" parent="${parent}">
+      <xacro:insert_block name="origin"/>
+    </xacro:vx300s>
+  </xacro:macro>
+</robot>
