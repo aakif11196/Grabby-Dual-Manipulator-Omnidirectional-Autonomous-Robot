@@ -396,6 +396,8 @@ Please make sure your code follows the ROS 2 coding conventions and passes `amen
 
 This project is open-source. See the `LICENSE` file for details.
 
+**Demonstration video**: https://www.linkedin.com/posts/shaikhaakif_robotics-ros2-digitaltwin-activity-7437142758877929472-Ltgx?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADb5NCcBkppMk4tgQLxfg0_JF4B-CL6424s
+
 ---
 
 *Built with ROS 2 Humble · Ubuntu 22.04 · Gazebo · Nav2 · SLAM Toolbox*
