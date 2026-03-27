@@ -1,6 +1,8 @@
-# 🤖 Axebot — Omnidirectional Mobile Manipulation Robot
+# 🤖 Grabby — Omnidirectional Mobile Manipulation Robot
 
-**Axebot** is a fully integrated ROS 2 research robot combining a 3-wheel omnidirectional mobile base with dual VX300s 6-DOF robotic arms simulated in Gazebo. The mobile base is teleoperated via keyboard (`cmd_vel`), while the simulated arms are driven in real time by two physical robotic exoskeletons worn by the operator — making it a unique human-in-the-loop manipulation research platform. It also supports fully autonomous navigation via Nav2 and SLAM-based mapping.
+**Grabby** is a fully integrated ROS 2 research robot combining a 3-wheel omnidirectional mobile base with dual VX300s 6-DOF robotic arms simulated in Gazebo. The mobile base is teleoperated via keyboard (`cmd_vel`), while the simulated arms are driven in real time by two physical robotic exoskeletons worn by the operator — making it a unique human-in-the-loop manipulation research platform. It also supports fully autonomous navigation via Nav2 and SLAM-based mapping.
+
+**⚠️ Note:** All ROS 2 packages in this repository use the axebot prefix (e.g., axebot_gazebo), which is the internal software name for the Grabby robot project.
 
 ---
 
@@ -273,7 +275,7 @@ Default key bindings:
 | `k` | Stop |
 | `q / z` | Increase / decrease speed |
 
-#### 5b. Arms — Physical Exoskeleton Control
+#### 5b. 🕹️ Arms — **Physical Exoskeleton Control**
 
 The simulated arms are controlled in real time by two **physical robotic exoskeletons** worn by the operator. Each exoskeleton maps directly to one simulated VX300s arm (left and right).
 
